@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Equipo Dev — Perfiles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent1: #7fff6e;
+      --accent2: #ff6ef7;
+      --accent3: #6ebaff;
+      --text: #e8e8f0;
+      --muted: #5a5a7a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Fira Code', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── GRID BG ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(127,255,110,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(127,255,110,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── HERO ─── */
+    header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 80px 20px 60px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: .7rem;
+      letter-spacing: .2em;
+      color: var(--accent1);
+      border: 1px solid var(--accent1);
+      border-radius: 2px;
+      padding: 4px 12px;
+      margin-bottom: 24px;
+      animation: fadeUp .6s ease both;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.03em;
+      animation: fadeUp .6s .1s ease both;
+    }
+
+    h1 span.green { color: var(--accent1); }
+    h1 span.pink  { color: var(--accent2); }
+
+    .subtitle {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: .85rem;
+      letter-spacing: .05em;
+      animation: fadeUp .6s .2s ease both;
+    }
+
+    .subtitle em {
+      color: var(--accent3);
+      font-style: normal;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0 auto 60px;
+      max-width: 800px;
+    }
+
+    /* ─── CARDS GRID ─── */
+    main {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ─── CARD ─── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+      animation: fadeUp .7s ease both;
+    }
+
+    .card:nth-child(2) { animation-delay: .15s; }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--card-accent);
+      box-shadow: 0 20px 60px -20px var(--card-glow);
+    }
+
+    /* card accent color passed via inline style */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--card-accent);
+    }
+
+    /* corner decoration */
+    .card::after {
+      content: attr(data-index);
+      position: absolute;
+      top: 16px; right: 20px;
+      font-size: .65rem;
+      color: var(--muted);
+      letter-spacing: .1em;
+    }
+
+    /* avatar circle */
+    .avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--card-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: var(--bg);
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .avatar::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px dashed var(--card-accent);
+      opacity: .4;
+      animation: spin 8s linear infinite;
+    }
+
+    .card-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .card-role {
+      font-size: .72rem;
+      color: var(--card-accent);
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .card-skill {
+      background: rgba(255,255,255,.04);
+      border-left: 2px solid var(--card-accent);
+      padding: 12px 14px;
+      border-radius: 0 2px 2px 0;
+      font-size: .8rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .card-skill strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 4px;
+      font-size: .75rem;
+    }
+
+    /* tags */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: .65rem;
+      letter-spacing: .08em;
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+      transition: all .2s;
+    }
+
+    .card:hover .tag {
+      border-color: var(--card-accent);
+      color: var(--card-accent);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 24px;
+      font-size: .7rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    footer span { color: var(--accent1); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ─── TERMINAL BLINK ─── */
+    .blink {
+      animation: blink 1s step-end infinite;
+      color: var(--accent1);
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">// proyecto-colaborativo-equipo</div>
+    <h1>
+      <span class="green">Dev</span><span class="pink">Team</span><br/>Perfiles
+    </h1>
+    <p class="subtitle">
+      2 devs · 1 repo · <em>∞ posibilidades</em><span class="blink">_</span>
+    </p>
+  </header>
+
+  <div class="divider"></div>
+
+  <main>
+
+    <!-- ══════════════════════════════════
+         TARJETA 1 — Estudiante 1
+         (cada compañero edita la suya)
+    ══════════════════════════════════ -->
+    <article
+      class="card"
+      data-index="01"
+      style="--card-accent:#7fff6e; --card-glow:rgba(127,255,110,.25);"
+    >
+      <div class="avatar">K</div>
+      <p class="card-name">Karen Nataly Sierra Castaño</p>
+      <p class="card-role">Frontend Developer</p>
+      <div class="card-skill">
+        <strong>⚡ Habilidad técnica</strong>
+        HTML &amp; CSS — diseño de interfaces limpias y responsivas con atención al detalle visual.
+      </div>
+      <div class="tags">
+        <span class="tag">HTML5</span>
+        <span class="tag">CSS3</span>
+        <span class="tag">Git</span>
+        <span class="tag">GitHub</span>
+      </div>
+    </article>
+
+    <!-- ══════════════════════════════════
+         TARJETA 2 — Estudiante 2
+    ══════════════════════════════════ -->
+    <article
+      class="card"
+      data-index="02"
+      style="--card-accent:#6ebaff; --card-glow:rgba(110,186,255,.25);"
+    >
+      <div class="avatar" style="color:#0a0a0f">J</div>
+      <p class="card-name">Javier Felipe Meneses Reyes</p>
+      <p class="card-role">Backend Developer</p>
+      <div class="card-skill">
+        <strong>⚡ Habilidad técnica</strong>
+        Control de versiones con Git — gestión de ramas, merges y resolución de conflictos.
+      </div>
+      <div class="tags">
+        <span class="tag">Git</span>
+        <span class="tag">GitHub</span>
+        <span class="tag">Bash</span>
+        <span class="tag">Pull Requests</span>
+      </div>
+    </article>
+
+  </main>
+
+  <footer>
+    Hecho con <span>♥</span> usando Git &amp; GitHub Pages · 2025
+  </footer>
+
+</body>
+</html>
