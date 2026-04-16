@@ -143,41 +143,59 @@
     <div class="section-tag">💬 Historias reales</div>
     <h2 class="section-title">Familias felices</h2>
   </div>
-  <div class="testimonials-row">
-    <div class="testimonial-card observe-me" style="transition-delay:0s">
-      <div class="t-stars">⭐⭐⭐⭐⭐</div>
-      <div class="t-text">"Luna llegó a nuestras vidas hace 6 meses y ya no imaginamos el hogar sin ella. El proceso fue increíblemente fácil y el equipo nos apoyó en todo momento."</div>
-      <div class="t-author">
-        <div class="t-avatar">👩</div>
-        <div>
-          <div class="t-name">Valentina R.</div>
-          <div class="t-pet">Adoptó a Luna 🐱</div>
+  <div class="slider-wrap">
+    <button class="slider-arrow slider-prev" onclick="slideMove(-1)" aria-label="Anterior">&#8592;</button>
+    <div class="slider-viewport">
+      <div class="slider-track" id="sliderTrack">
+        <div class="testimonial-card">
+          <div class="t-stars">⭐⭐⭐⭐⭐</div>
+          <div class="t-text">"Luna llegó a nuestras vidas hace 6 meses y ya no imaginamos el hogar sin ella. El proceso fue increíblemente fácil y el equipo nos apoyó en todo momento."</div>
+          <div class="t-author">
+            <div class="t-avatar">👩</div>
+            <div>
+              <div class="t-name">Valentina R.</div>
+              <div class="t-pet">Adoptó a Luna 🐱</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">⭐⭐⭐⭐⭐</div>
+          <div class="t-text">"Buscábamos un perro tranquilo y nos recomendaron a Manchas. Es el compañero perfecto para nuestros hijos. ¡Gracias Patitas por hacer esto posible!"</div>
+          <div class="t-author">
+            <div class="t-avatar">👨</div>
+            <div>
+              <div class="t-name">Carlos M.</div>
+              <div class="t-pet">Adoptó a Manchas 🐶</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">⭐⭐⭐⭐⭐</div>
+          <div class="t-text">"Llevaba meses buscando el lugar correcto para adoptar. Patitas me dio confianza desde el primer momento. Coco ya es parte de la familia."</div>
+          <div class="t-author">
+            <div class="t-avatar">👩</div>
+            <div>
+              <div class="t-name">María José L.</div>
+              <div class="t-pet">Adoptó a Coco 🐇</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">⭐⭐⭐⭐⭐</div>
+          <div class="t-text">"Al principio tenía dudas, pero el equipo me guio en cada paso. Rocky llegó a casa y desde el primer día fue como si siempre hubiera vivido con nosotros."</div>
+          <div class="t-author">
+            <div class="t-avatar">👦</div>
+            <div>
+              <div class="t-name">Andrés P.</div>
+              <div class="t-pet">Adoptó a Rocky 🐶</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="testimonial-card observe-me" style="transition-delay:0.1s">
-      <div class="t-stars">⭐⭐⭐⭐⭐</div>
-      <div class="t-text">"Buscábamos un perro tranquilo y nos recomendaron a Manchas. Es el compañero perfecto para nuestros hijos. ¡Gracias Patitas por hacer esto posible!"</div>
-      <div class="t-author">
-        <div class="t-avatar">👨</div>
-        <div>
-          <div class="t-name">Carlos M.</div>
-          <div class="t-pet">Adoptó a Manchas 🐶</div>
-        </div>
-      </div>
-    </div>
-    <div class="testimonial-card observe-me" style="transition-delay:0.2s">
-      <div class="t-stars">⭐⭐⭐⭐⭐</div>
-      <div class="t-text">"Llevaba meses buscando el lugar correcto para adoptar. Patitas me dio confianza desde el primer momento. Coco ya es parte de la familia."</div>
-      <div class="t-author">
-        <div class="t-avatar">👩</div>
-        <div>
-          <div class="t-name">María José L.</div>
-          <div class="t-pet">Adoptó a Coco 🐇</div>
-        </div>
-      </div>
-    </div>
+    <button class="slider-arrow slider-next" onclick="slideMove(1)" aria-label="Siguiente">&#8594;</button>
   </div>
+  <div class="slider-dots" id="sliderDots"></div>
 </section>
 
 <!-- CTA -->
@@ -198,17 +216,84 @@
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-img"><img id="modalImg" src="" alt=""/></div>
-    <div class="modal-content">
-      <div class="modal-name" id="modalName"></div>
-      <div class="modal-breed" id="modalBreed"></div>
-      <div class="modal-desc" id="modalDesc"></div>
-      <div class="modal-tags" id="modalTags"></div>
-      <div class="modal-btns">
-        <button class="btn-primary" style="flex:1;text-align:center" onclick="handleAdopt()">Solicitar adopción 🐾</button>
-        <button class="btn-secondary" onclick="closeModal()">Atrás</button>
+
+    <!-- VISTA: Info mascota -->
+    <div id="modalViewInfo">
+      <div class="modal-img"><img id="modalImg" src="" alt=""/></div>
+      <div class="modal-content">
+        <div class="modal-name" id="modalName"></div>
+        <div class="modal-breed" id="modalBreed"></div>
+        <div class="modal-desc" id="modalDesc"></div>
+        <div class="modal-tags" id="modalTags"></div>
+        <div class="modal-btns">
+          <button class="btn-primary" style="flex:1;text-align:center" onclick="showAdoptForm()">Solicitar adopción 🐾</button>
+          <button class="btn-secondary" onclick="closeModal()">Atrás</button>
+        </div>
       </div>
     </div>
+
+    <!-- VISTA: Formulario de adopción -->
+    <div id="modalViewForm" style="display:none;">
+      <div class="form-header">
+        <div class="form-header-icon">🐾</div>
+        <div class="form-header-text">
+          <div class="form-title">Solicitud de adopción</div>
+          <div class="form-subtitle" id="formSubtitle">para <strong id="formPetName"></strong></div>
+        </div>
+      </div>
+      <div class="modal-content" style="padding-top:0">
+        <div class="adopt-form">
+          <div class="form-group">
+            <label class="form-label">Tu nombre completo</label>
+            <input class="form-input" id="fNombre" type="text" placeholder="Ej: Javier Gómez" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Correo electrónico</label>
+              <input class="form-input" id="fEmail" type="email" placeholder="tu@email.com" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Teléfono</label>
+              <input class="form-input" id="fTel" type="tel" placeholder="300 000 0000" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Tienes experiencia con mascotas?</label>
+            <div class="form-radio-group">
+              <label class="form-radio"><input type="radio" name="exp" value="si"/> Sí, he tenido antes</label>
+              <label class="form-radio"><input type="radio" name="exp" value="primera"/> Es mi primera vez</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Cómo es tu hogar?</label>
+            <div class="form-radio-group">
+              <label class="form-radio"><input type="radio" name="hogar" value="casa"/> 🏡 Casa con jardín</label>
+              <label class="form-radio"><input type="radio" name="hogar" value="apto"/> 🏢 Apartamento</label>
+              <label class="form-radio"><input type="radio" name="hogar" value="otro"/> 🏘️ Otro</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Por qué quieres adoptar? <span style="color:var(--muted);font-weight:400">(opcional)</span></label>
+            <textarea class="form-input form-textarea" id="fMotivo" placeholder="Cuéntanos un poco…" rows="3"></textarea>
+          </div>
+          <div class="modal-btns" style="margin-top:8px">
+            <button class="btn-primary" style="flex:1;text-align:center" onclick="submitAdoptForm()">Enviar solicitud ✨</button>
+            <button class="btn-secondary" onclick="showInfoView()">Volver</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISTA: Éxito -->
+    <div id="modalViewSuccess" style="display:none;">
+      <div class="success-view">
+        <div class="success-icon">🎉</div>
+        <div class="success-title">¡Solicitud enviada!</div>
+        <div class="success-desc">Nos pondremos en contacto contigo pronto para coordinar la visita con <strong id="successPetName"></strong>.</div>
+        <button class="btn-primary" style="margin-top:24px" onclick="closeModal()">Cerrar 🐾</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -354,6 +439,103 @@ function handleAdopt() {
   showToast(`¡Solicitud enviada para adoptar a ${p ? p.name : 'la mascota'}! 🎉`);
 }
 
+/* ── FORMULARIO ADOPCIÓN ── */
+function showAdoptForm() {
+  const p = pets.find(x => x.id === currentPetId);
+  document.getElementById('formPetName').textContent = p ? p.name : 'la mascota';
+  document.getElementById('modalViewInfo').style.display = 'none';
+  document.getElementById('modalViewForm').style.display = 'block';
+  document.getElementById('modalViewSuccess').style.display = 'none';
+}
+
+function showInfoView() {
+  document.getElementById('modalViewInfo').style.display = 'block';
+  document.getElementById('modalViewForm').style.display = 'none';
+  document.getElementById('modalViewSuccess').style.display = 'none';
+}
+
+function submitAdoptForm() {
+  const nombre = document.getElementById('fNombre').value.trim();
+  const email  = document.getElementById('fEmail').value.trim();
+  const tel    = document.getElementById('fTel').value.trim();
+  const exp    = document.querySelector('input[name="exp"]:checked');
+  const hogar  = document.querySelector('input[name="hogar"]:checked');
+
+  if (!nombre) { shakeInput('fNombre'); showToast('Escribe tu nombre 👆'); return; }
+  if (!email || !email.includes('@')) { shakeInput('fEmail'); showToast('Email inválido 📧'); return; }
+  if (!tel)   { shakeInput('fTel'); showToast('Agrega tu teléfono 📱'); return; }
+  if (!exp)   { showToast('¿Tienes experiencia con mascotas? 🐾'); return; }
+  if (!hogar) { showToast('¿Cómo es tu hogar? 🏡'); return; }
+
+  const p = pets.find(x => x.id === currentPetId);
+  document.getElementById('successPetName').textContent = p ? p.name : 'la mascota';
+  document.getElementById('modalViewForm').style.display = 'none';
+  document.getElementById('modalViewSuccess').style.display = 'block';
+  spawnPaws(window.innerWidth / 2, window.innerHeight / 2);
+}
+
+function shakeInput(id) {
+  const el = document.getElementById(id);
+  el.classList.add('input-shake');
+  setTimeout(() => el.classList.remove('input-shake'), 500);
+}
+
+/* ── SLIDER TESTIMONIOS ── */
+let sliderIndex = 0;
+const VISIBLE = 1; // cuántas tarjetas por vez
+
+function initSlider() {
+  const track    = document.getElementById('sliderTrack');
+  const viewport = track ? track.parentElement : null;
+  const cards    = track ? track.querySelectorAll('.testimonial-card') : [];
+  const dotsEl   = document.getElementById('sliderDots');
+  if (!cards.length || !dotsEl || !viewport) return;
+
+  // Forzar ancho exacto de cada tarjeta = ancho del viewport
+  function setCardWidths() {
+    const w = viewport.offsetWidth;
+    cards.forEach(c => { c.style.width = w + 'px'; c.style.flexShrink = '0'; });
+  }
+  setCardWidths();
+  window.addEventListener('resize', () => { setCardWidths(); goToSlide(sliderIndex); });
+
+  dotsEl.innerHTML = '';
+  cards.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'slider-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', `Ir al testimonio ${i+1}`);
+    d.onclick = () => goToSlide(i);
+    dotsEl.appendChild(d);
+  });
+  goToSlide(0);
+}
+
+function goToSlide(index) {
+  const track    = document.getElementById('sliderTrack');
+  const viewport = track ? track.parentElement : null;
+  const cards    = track ? track.querySelectorAll('.testimonial-card') : [];
+  if (!cards.length || !viewport) return;
+  sliderIndex = Math.max(0, Math.min(index, cards.length - 1));
+  const cardWidth = viewport.offsetWidth;
+  track.style.transform = `translateX(-${sliderIndex * cardWidth}px)`;
+  document.querySelectorAll('.slider-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === sliderIndex);
+  });
+}
+
+function slideMove(dir) {
+  const track = document.getElementById('sliderTrack');
+  const cards = track ? track.querySelectorAll('.testimonial-card') : [];
+  const total = cards.length;
+  goToSlide((sliderIndex + dir + total) % total);
+}
+
+// Auto-avanzar cada 5s
+let sliderTimer = setInterval(() => slideMove(1), 5000);
+document.querySelector('.slider-wrap') && document.querySelector('.slider-wrap').addEventListener('mouseenter', () => clearInterval(sliderTimer));
+document.querySelector('.slider-wrap') && document.querySelector('.slider-wrap').addEventListener('mouseleave', () => { sliderTimer = setInterval(() => slideMove(1), 5000); });
+
+
 /* ── TOAST ── */
 let toastTimer;
 function showToast(msg) {
@@ -432,6 +614,7 @@ if (statsBar) statsObserver.observe(statsBar);
 
 /* ── INIT ── */
 renderPets(pets);
+initSlider();
 </script>
 </body>
 </html>
