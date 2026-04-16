@@ -477,23 +477,139 @@ section { position: relative; z-index: 1; }
 .step-title { font-size: 1.05rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
 .step-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
 
-/* ── TESTIMONIALS ── */
+/* ── TESTIMONIALS + SLIDER ── */
 .testimonials-section {
   padding: 0 24px 100px;
   max-width: 1100px; margin: 0 auto;
 }
 .testimonials-header { text-align: center; margin-bottom: 50px; }
-.testimonials-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+
+.slider-wrap {
+  display: flex; align-items: center; gap: 16px;
+  position: relative;
+}
+.slider-viewport {
+  flex: 1; overflow: hidden; border-radius: var(--radius);
+}
+.slider-track {
+  display: flex; gap: 0;
+  transition: transform 0.45s cubic-bezier(0.34,1.2,0.64,1);
+  will-change: transform;
+}
 .testimonial-card {
+  width: 100%; min-width: 0; flex: 0 0 100%; flex-shrink: 0;
   background: var(--glass);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255,255,255,0.85);
   border-radius: var(--radius);
-  padding: 28px 26px;
+  padding: 36px 32px;
   box-shadow: var(--shadow2);
-  transition: transform 0.35s ease, box-shadow 0.35s;
+  transition: box-shadow 0.35s;
 }
-.testimonial-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+.testimonial-card:hover { box-shadow: var(--shadow); }
+
+.slider-arrow {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255,255,255,0.9);
+  font-size: 1.1rem; font-weight: 700; color: var(--brown);
+  box-shadow: var(--shadow2);
+  cursor: none; flex-shrink: 0;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.slider-arrow:hover {
+  background: var(--coral2); color: white;
+  transform: scale(1.1); box-shadow: 0 6px 20px rgba(255,95,61,0.35);
+}
+
+.slider-dots {
+  display: flex; justify-content: center; gap: 8px;
+  margin-top: 24px;
+}
+.slider-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--blush); border: none; cursor: none;
+  transition: background 0.3s, transform 0.3s, width 0.3s;
+  padding: 0;
+}
+.slider-dot.active {
+  background: var(--coral2); width: 28px; border-radius: 100px;
+  transform: scale(1);
+}
+
+/* ── FORMULARIO ADOPCIÓN ── */
+.form-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 24px 28px 16px;
+  border-bottom: 1px solid rgba(139,94,60,0.08);
+}
+.form-header-icon {
+  width: 48px; height: 48px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--coral2), #FF9970);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; flex-shrink: 0;
+  box-shadow: 0 6px 18px rgba(255,95,61,0.3);
+}
+.form-title { font-size: 1.1rem; font-weight: 800; color: var(--text); }
+.form-subtitle { font-size: 0.82rem; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+.adopt-form { display: flex; flex-direction: column; gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-label { font-size: 0.8rem; font-weight: 700; color: var(--text); }
+.form-input {
+  width: 100%; padding: 10px 14px;
+  border: 1.5px solid rgba(139,94,60,0.15);
+  border-radius: var(--radius-s);
+  font-family: inherit; font-size: 0.88rem; color: var(--text);
+  background: rgba(255,255,255,0.7);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.form-input:focus {
+  border-color: var(--coral2);
+  box-shadow: 0 0 0 3px rgba(255,95,61,0.12);
+}
+.form-textarea { resize: vertical; min-height: 72px; }
+
+.form-radio-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+.form-radio {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 100px;
+  border: 1.5px solid rgba(139,94,60,0.15);
+  font-size: 0.82rem; font-weight: 600; color: var(--brown);
+  background: rgba(255,255,255,0.6); cursor: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.form-radio:has(input:checked) {
+  border-color: var(--coral2);
+  background: rgba(255,95,61,0.08);
+  color: var(--coral2);
+}
+.form-radio input { display: none; }
+
+@keyframes inputShake {
+  0%,100% { transform: translateX(0); }
+  20%,60% { transform: translateX(-6px); }
+  40%,80% { transform: translateX(6px); }
+}
+.input-shake { animation: inputShake 0.4s ease; border-color: #e05 !important; }
+
+/* ── ÉXITO ── */
+.success-view {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; padding: 56px 32px;
+}
+.success-icon { font-size: 3.5rem; margin-bottom: 16px; animation: successPop 0.6s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes successPop {
+  from { transform: scale(0) rotate(-20deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0); opacity: 1; }
+}
+.success-title { font-size: 1.5rem; font-weight: 800; color: var(--text); margin-bottom: 10px; }
+.success-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; max-width: 300px; }
+
 .t-stars { font-size: 0.9rem; margin-bottom: 12px; letter-spacing: 2px; }
 .t-text { font-size: 0.9rem; color: var(--text); line-height: 1.7; font-weight: 400; margin-bottom: 20px; font-style: italic; }
 .t-author { display: flex; align-items: center; gap: 12px; }
